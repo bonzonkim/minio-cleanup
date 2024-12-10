@@ -45,7 +45,7 @@ func listObjects(bucketName string, recursive bool, minioClient *minio.Client) <
 }
 
 func RemoveObjectsBeforeWeek(bucketName string, recursive bool, minioClient *minio.Client) {
-	sevenDaysAgoFromNow := time.Now().AddDate(0, 0, -5)
+	daysAgo := time.Now().AddDate(0, 0, -5)
 	objectCh := listObjects(bucketName, recursive, minioClient)
 
 	for object := range objectCh {
@@ -54,7 +54,7 @@ func RemoveObjectsBeforeWeek(bucketName string, recursive bool, minioClient *min
 			continue
 		}
 
-		if !object.LastModified.Before(sevenDaysAgoFromNow) {
+		if !object.LastModified.Before(daysAgo) {
 			continue
 		}
 
