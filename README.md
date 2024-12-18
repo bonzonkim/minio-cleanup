@@ -30,4 +30,4 @@ Then you apply CronJob manifest.
 kubectl apply -f kubernetes/go-minio-cleanup-cronjob
 ```
 
-Now It will automatically start to cleaning at 00:00 (It is depends on your Kubernetes cluster TimeZone).
+Now It will automatically start to cleaning at 00:00 (It depends on your Kubernetes cluster TimeZone).
