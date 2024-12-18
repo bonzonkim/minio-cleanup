@@ -6,13 +6,11 @@ import (
 	"log"
 	"time"
 
-	//"github.com/minio/minio-go"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
 )
 
 func ConnectMinio(endpoint string, accessKeyID string, secretAccessKey string, useSSL bool) *minio.Client {
-	//minioClient, err := minio.New(endpoint, accessKeyID, secretAccessKey, useSSL)
 	minioClient, err := minio.New(endpoint, &minio.Options{
 		Creds: credentials.NewStaticV4(accessKeyID, secretAccessKey, ""),
 		Secure: useSSL,
