@@ -14,7 +14,7 @@ var (
 
 func main() {
 	keys := loadEnv.Load()
-	minioClient := minioUtils.ConnectMinio(endpoint, keys.AccessKeyId, keys.SecretAccessKey, useSSL)
+	minioClient := minioUtils.ConnectMinio(keys.Endpoint, keys.AccessKeyId, keys.SecretAccessKey, useSSL)
 
-	minioUtils.RemoveObjectsBeforeWeek(lokiChunks, recursive, minioClient)
+	minioUtils.RemoveObjectsBeforeWeek(keys.BucketName, recursive, minioClient)
 }

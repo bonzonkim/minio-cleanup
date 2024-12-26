@@ -14,6 +14,11 @@ spec:
             image: <your image>
             imagePullPolicy: Always
             env:
+            - name: ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: minio-credential
+                  key: ENDPOINT
             - name: ACCESSKEYID
               valueFrom:
                 secretKeyRef:
@@ -24,4 +29,8 @@ spec:
                 secretKeyRef:
                   name: minio-credential
                   key: SECRET_ACCESS_KEY
+            - name: BUCKETNAME
+              value: chunks
+            - name: RETENTIONPERIOD
+              value: 7
           restartPolicy: Never
