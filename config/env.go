@@ -17,19 +17,31 @@ type AccessKeys struct {
 }
 
 func Load() *AccessKeys {
-	reteiontionStr := os.Getenv("RETENTIONPERIOD")
-	retentionPeriod, err := strconv.ParseInt(reteiontionStr, 10, strconv.IntSize)
-	if err != nil {
-		log.Fatalln("failed to parse retentionPeriod to int")
-	}
-	Keys := &AccessKeys {
-		Endpoint:			os.Getenv("ENDPOINT"),
-		AccessKeyId:		os.Getenv("ACCESSKEYID"),
-		SecretAccessKey: 	os.Getenv("SECRETACCESSKEY"),
-		BucketName:		 	os.Getenv("BUCKETNAME"),
-		RetentionPeriod: 	int(retentionPeriod),
+	requiredVars := []string{"ENDPOINT", "ACCESSKEYID", "SECRETACCESSKEY", "BUCKETNAME", "RETENTIONPERIOD"}
+	env := make(map[string]string)
+
+	for _, key := range requiredVars {
+		value := os.Getenv(key)
+		if value == "" {
+			log.Fatalf("%s is not set or empty string", value)
+		}
+		env[key] = value
 	}
 
+
+	retenteionPeriod, err := strconv.Atoi(env["RETENTIONPERIOD"])
+	if err != nil {
+		log.Fatalf("Invalid RETENTIONPERIOD value %v", err)
+	}
+	
+
 	fmt.Println("Successfully loaded env")
-	return Keys
+
+	return &AccessKeys {
+		Endpoint:			env["ENDPOINT"],
+		AccessKeyId:		env["ACCESSKEYID"],
+		SecretAccessKey:	env["SECRETACCESSKEY"],
+		BucketName:			env["BUCKETNAME"],	
+		RetentionPeriod:	retenteionPeriod,
+	}
 }

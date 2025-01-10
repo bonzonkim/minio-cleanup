@@ -1,10 +1,18 @@
 # Cleaning up MiniO Objects as Kubernetes CronJob
 
-Cleaning up MiniO Objects older than 5 days only except `loki_cluster_seed.json`.  
+Cleaning up MiniO Objects older than desired retentionPeriod.
 
 
-## 1. Set your MiniO endpoint
-Replace variable `endpoint` in the `main.go` file with your MiniO endpoint so the Pod can reach your MiniO.
+## 1. Set your MiniO envs
+Set envs in the `.env` file    
+<div>
+</div>
+
+`ENDPOINT`: Endpoint of your object Storage  
+`ACCESSKEYID`: ID of your object Storage  
+`SECRETACCESSKEY`: Password of your object Storage  
+`BUCKETNAME`: Bucket you want clean up  
+`RETENTIONPERIOD`: retention period in hour (3 => 3hour)
 
 ## 2. Build image
 Run following command to build container image.
@@ -15,7 +23,7 @@ docker build -t yourContainerRegistry/imageName .
 ## 3. Create Kubernetes secret
 
 ```sh
-kubectl create secret generic minio-credential --from-literal=ACCESS_KEY_ID=<MiniO-id> --from-literal=SECRET_ACCESS_KEY=<MiniO-password>
+kubectl create secret generic minio-credential --from-literal=ACCESS_KEY_ID=<MiniO-id> --from-literal=SECRET_ACCESS_KEY=<MiniO-password> --from-literal=BUCKETNAME=<Bucket name> --from-literal=RETENTIONPERIOD=<retention period>
 ```
 
 This command will populate Kubernetes secret with your MiniO credential.

@@ -2,9 +2,9 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: minio-cleanup-cronjob
-  namespace: lgtm
 spec:
   schedule: "0 0 * * *"
+  successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
@@ -32,5 +32,6 @@ spec:
             - name: BUCKETNAME
               value: chunks
             - name: RETENTIONPERIOD
-              value: 7
+              # value must be quoted
+              value: "7"
           restartPolicy: Never
