@@ -16,8 +16,10 @@ type AccessKeys struct {
 	RetentionPeriod		int
 }
 
+// Loads required variables
 func Load() *AccessKeys {
 	requiredVars := []string{"ENDPOINT", "ACCESSKEYID", "SECRETACCESSKEY", "BUCKETNAME", "RETENTIONPERIOD"}
+	// map stores all envs
 	env := make(map[string]string)
 
 	for _, key := range requiredVars {
