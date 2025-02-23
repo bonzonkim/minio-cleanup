@@ -1,4 +1,4 @@
-module minio-test
+module minio-cleanup
 
 go 1.22
 
